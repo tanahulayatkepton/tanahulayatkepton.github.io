@@ -1,41 +1,65 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
+  background-image: url('../images/buton-background.jpg');
   background-size: cover;
   background-position: center;
-  color: #fff;
-  text-shadow: 0 0 2px #000;
+  background-attachment: fixed;
+  color: #f0f8ff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 40px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 12px;
   margin-top: 60px;
+  background-color: rgba(10, 30, 60, 0.7); /* biru gelap transparan */
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 64, 128, 0.4);
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 2.2em;
   margin-bottom: 20px;
+  color: #add8e6; /* light blue */
 }
 
 p, li {
   font-size: 1.1em;
+  line-height: 1.6;
+}
+
+nav {
+  margin-top: 20px;
 }
 
 nav a {
   display: inline-block;
-  margin: 10px;
+  margin: 8px;
   padding: 10px 20px;
-  background: #ffffffaa;
-  color: #000;
-  text-decoration: none;
+  background-color: #1e90ff; /* dodger blue */
+  color: white;
   border-radius: 8px;
-  transition: background 0.3s ease;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 50, 0.2);
 }
 
 nav a:hover {
-  background: #fff;
+  background-color: #63b3ed; /* soft blue */
+  transform: translateY(-2px);
+}
+
+a {
+  color: #87cefa; /* skyblue */
+  text-decoration: underline;
+}
+
+.map-container {
+  margin: 20px 0;
+  border: 3px solid #1e90ff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 128, 255, 0.2);
 }
