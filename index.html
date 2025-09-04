@@ -1,19 +1,294 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard Penelitian</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Model Peta Status Hukum Adat – Kepulauan Buton</title>
+  <meta name="description" content="Model peta status hukum adat berbasis visualisasi data untuk meningkatkan pelayanan kepastian hukum bagi masyarakat adat di Kepulauan Buton." />
+  <style>
+    :root{
+      --bg:#0b1020; --card:#121832; --muted:#9fb3c8; --text:#eaf2ff; --accent:#5dd4c6; --accent-2:#7aa2ff;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.65}
+    a{color:var(--accent);text-decoration:none}
+    header.nav{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.9);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .container{max-width:1120px;margin:0 auto;padding:0 1rem}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+    .brand{display:flex;gap:.6rem;align-items:center;font-weight:700}
+    .brand .dot{width:.75rem;height:.75rem;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+    .nav-links{display:flex;gap:1rem;flex-wrap:wrap}
+    .nav-links a{font-size:.95rem;opacity:.9;padding:.4rem .6rem;border-radius:.6rem}
+    .nav-links a:hover{background:rgba(255,255,255,.06)}
+
+    .hero{position:relative;overflow:hidden}
+    .hero .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;padding:4rem 0}
+    .badge{display:inline-flex;gap:.5rem;align-items:center;font-size:.8rem;padding:.35rem .6rem;border:1px solid rgba(255,255,255,.14);border-radius:999px;color:var(--muted)}
+    .title{font-size:clamp(1.6rem,2.4vw,2.6rem);line-height:1.2;margin:.6rem 0 1rem}
+    .subtitle{color:var(--muted);max-width:70ch}
+    .cta{display:flex;gap:.75rem;margin-top:1.25rem}
+    .btn{appearance:none;border:0;border-radius:.9rem;padding:.8rem 1rem;font-weight:600;cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#0a0f1f}
+    .btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.16)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:1.2rem;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:1rem}
+
+    section{padding:3rem 0}
+    h1,h2{letter-spacing:.2px}
+    h2{font-size:1.4rem;margin:0 0 1rem}
+    p{margin:.5rem 0}
+    .grid{display:grid;gap:1rem}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    @media (max-width:980px){.hero .wrap{grid-template-columns:1fr}.grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr}}
+
+    .card{padding:1rem;border-radius:1rem;background:var(--card);border:1px solid rgba(255,255,255,.06)}
+    .card h3{margin:.2rem 0 .6rem;font-size:1.05rem}
+    .muted{color:var(--muted)}
+
+    .list{display:grid;gap:.6rem;margin:.6rem 0}
+    .list li{display:flex;gap:.6rem}
+    .list li::before{content:"•";color:var(--accent)}
+
+    .timeline{position:relative}
+    .timeline::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),var(--accent-2));opacity:.6}
+    .step{position:relative;padding-left:2rem;margin:1rem 0}
+    .dot{position:absolute;left:2px;top:.2rem;width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 0 3px rgba(93,212,198,.25)}
+
+    .table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid rgba(255,255,255,.08);border-radius:.8rem;overflow:hidden}
+    .table thead{background:rgba(255,255,255,.06)}
+    .table th,.table td{padding:.75rem;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;vertical-align:top}
+    .table tr:last-child td{border-bottom:0}
+
+    .footer{padding:2rem 0;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:.95rem}
+    .tag{display:inline-block;padding:.2rem .55rem;border-radius:.6rem;background:rgba(122,162,255,.16);border:1px solid rgba(122,162,255,.35);font-size:.75rem}
+    .kbd{font-variant:all-small-caps;letter-spacing:.08em}
+    .map-embed{aspect-ratio:16/9;border:0;width:100%;border-radius:1rem}
+    .tableau-embed{aspect-ratio:16/9;border:0;width:100%;border-radius:1rem;background:#0a0f1f}
+  </style>
 </head>
-<body style="background-image: url('images/buton-background.jpg');">
-  <div class="container">
-    <h1>Model Peta Status Hukum Adat - Kepulauan Buton</h1>
-    <p>Penelitian ini bertujuan mengembangkan peta status hukum adat berbasis visual data menggunakan Tableau untuk meningkatkan pelayanan kepastian hukum pada masyarakat adat di Kepulauan Buton.</p>
-    <nav>
-      <a href="peta/">Peta</a>
-      <a href="tim/">Tim Peneliti</a>
-      <a href="latar-belakang/">Latar Belakang</a>
-    </nav>
-  </div>
+<body>
+  <!-- NAV -->
+  <header class="nav" aria-label="Navigasi utama">
+    <div class="container nav-inner">
+      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>Hukum Adat Buton</span></div>
+      <nav class="nav-links" aria-label="Tautan bagian halaman">
+        <a href="#ringkasan">Ringkasan</a>
+        <a href="#tujuan">Tujuan</a>
+        <a href="#luaran">Luaran</a>
+        <a href="#lokasi">Lokasi</a>
+        <a href="#jadwal">Jadwal</a>
+        <a href="#tim">Tim</a>
+        <a href="#peta">Peta</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO / RINGKASAN -->
+  <section class="hero" id="ringkasan">
+    <div class="container wrap">
+      <div>
+        <span class="badge">📍 Kepulauan Buton · Visualisasi Data Hukum Adat</span>
+        <h1 class="title">Model Peta Status Hukum Adat Berbasis Visual Data</h1>
+        <p class="subtitle">
+          Penelitian ini bertujuan untuk mengembangkan model peta status hukum adat berbasis visualisasi data untuk meningkatkan pelayanan kepastian hukum bagi masyarakat adat di Kepulauan Buton. Pengakuan hukum terhadap masyarakat adat di Indonesia, khususnya di Kepulauan Buton, masih menghadapi tantangan besar dalam implementasinya. Terdapat konflik-konflik yang berkaitan dengan tanah ulayat, pengelolaan sumber daya alam, dan batas wilayah adat yang belum memiliki status hukum yang jelas. Oleh karena itu, penelitian ini bertujuan untuk memetakan dan mengklarifikasi status hukum masyarakat adat di wilayah tersebut, dengan memanfaatkan teknologi visualisasi data melalui aplikasi <span class="kbd">Tableau</span>.
+        </p>
+        <p class="subtitle">
+          Model peta ini memberikan gambaran yang lebih jelas dan terperinci mengenai status hukum adat, termasuk pengakuan hak atas tanah, penggunaan sumber daya alam, dan peraturan-peraturan lokal. Peta juga dirancang dapat diakses online dan interaktif, sehingga masyarakat adat, pemerintah daerah, dan pemangku kepentingan lainnya dapat berkolaborasi dalam pengambilan keputusan berbasis data yang akurat dan transparan.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#peta">Lihat Peta Interaktif</a>
+          <a class="btn ghost" href="#luaran">Dokumen & Publikasi</a>
+        </div>
+      </div>
+      <div class="glass card" aria-label="Masalah utama dan solusi ringkas">
+        <h3>Masalah Utama</h3>
+        <ul class="list">
+          <li>Konflik tanah ulayat dan batas wilayah adat.</li>
+          <li>Ketidakjelasan status hukum pengelolaan sumber daya alam.</li>
+          <li>Keterbatasan akses informasi hukum adat yang terstandar.</li>
+        </ul>
+        <p class="muted">Solusi: pemetaan status hukum adat berbasis <span class="kbd">Tableau</span> yang dapat diakses publik dan mendukung kolaborasi pemangku kepentingan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TUJUAN -->
+  <section id="tujuan">
+    <div class="container">
+      <h2>Tujuan Penelitian</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>1) Peta Berbasis Data Visual</h3>
+          <p>Menghasilkan peta status hukum adat yang berbasis data visual yang mudah dipahami dan diperbarui.</p>
+        </div>
+        <div class="card">
+          <h3>2) Transparansi & Literasi Hukum</h3>
+          <p>Meningkatkan transparansi dan pemahaman masyarakat adat mengenai hak-hak hukum dan status yang berlaku.</p>
+        </div>
+        <div class="card">
+          <h3>3) Penguatan Pengakuan Hak</h3>
+          <p>Memperkuat pengakuan dan perlindungan hak-hak masyarakat adat dalam konteks pengelolaan SDA dan tanah ulayat.</p>
+        </div>
+        <div class="card">
+          <h3>4) Alat Kolaborasi</h3>
+          <p>Menyediakan alat efektif bagi pemangku kepentingan untuk berkolaborasi dalam pengelolaan hukum adat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUARAN -->
+  <section id="luaran">
+    <div class="container">
+      <h2>Luaran Penelitian</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Model Peta Status Hukum Adat</h3>
+          <p>Peta yang menggambarkan status hukum adat di Kepulauan Buton. <span class="tag">Akan didaftarkan sebagai Hak Cipta</span> dan dipublikasikan melalui website terkait.</p>
+        </div>
+        <div class="card">
+          <h3>Laporan Feasibility Study Produk</h3>
+          <p>Dokumen kajian kelayakan pemanfaatan peta hukum adat bagi layanan kepastian hukum.</p>
+        </div>
+        <div class="card">
+          <h3>Publikasi Ilmiah</h3>
+          <p>Artikel pada jurnal terindeks <strong>Scopus Q4</strong> serta jurnal relevan lainnya.</p>
+        </div>
+        <div class="card">
+          <h3>Penerbitan Hak Cipta</h3>
+          <p>Pendaftaran HKI (Hak Cipta) atas peta status hukum adat yang dikembangkan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOKASI -->
+  <section id="lokasi">
+    <div class="container">
+      <h2>Lokasi Penelitian</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Kabupaten Buton</h3>
+          <p class="muted">Desa Wabula, Desa Kombeli, Desa Kaongkeongkea, Desa Takimpo, dan Desa Kondowa</p>
+        </div>
+        <div class="card">
+          <h3>Kabupaten Buton Selatan</h3>
+          <p class="muted">Desa Lapandewa Kaindea</p>
+        </div>
+        <div class="card">
+          <h3>Kota Baubau</h3>
+          <p class="muted">Kelurahan Melai, Kecamatan Murhum, Kecamatan Kulisusu</p>
+        </div>
+        <div class="card">
+          <h3>Kabupaten Bombana</h3>
+          <p class="muted">Kecamatan Kabaena</p>
+        </div>
+        <div class="card">
+          <h3>Kabupaten Wakatobi</h3>
+          <p class="muted">Kecamatan Wakatobi</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JADWAL -->
+  <section id="jadwal">
+    <div class="container">
+      <h2>Jadwal Penelitian (12 Bulan)</h2>
+      <div class="timeline card">
+        <div class="step">
+          <span class="dot" aria-hidden="true"></span>
+          <h3>Persiapan (Bulan 1–3)</h3>
+          <p class="muted">Pengumpulan data awal, identifikasi kebutuhan, penyusunan instrumen penelitian.</p>
+        </div>
+        <div class="step">
+          <span class="dot" aria-hidden="true"></span>
+          <h3>Penerapan Model (Bulan 4–6)</h3>
+          <p class="muted">Eksplorasi, wawancara dengan masyarakat adat, analisis hukum & data, serta visualisasi data.</p>
+        </div>
+        <div class="step">
+          <span class="dot" aria-hidden="true"></span>
+          <h3>Pengujian Model (Bulan 7–9)</h3>
+          <p class="muted">FGD dengan pemerintah & masyarakat adat, penyusunan feasibility study, uji coba dengan mitra.</p>
+        </div>
+        <div class="step">
+          <span class="dot" aria-hidden="true"></span>
+          <h3>Validasi Model (Bulan 10–12)</h3>
+          <p class="muted">Validasi oleh tim ahli, penyusunan laporan akhir, pendaftaran HKI peta, dan publikasi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIM -->
+  <section id="tim">
+    <div class="container">
+      <h2>Tim Penelitian</h2>
+      <div class="card" role="table" aria-label="Daftar anggota tim penelitian">
+        <table class="table">
+          <thead>
+            <tr><th>Nama</th><th>Peran</th><th>Tugas Utama</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Safrin Salam</td>
+              <td>Ketua Pengusul · Dosen Hukum, Universitas Muhammadiyah Buton</td>
+              <td>Mengatur perencanaan, pelaksanaan, pengawasan penelitian, serta menyusun laporan akhir.</td>
+            </tr>
+            <tr>
+              <td>Agus Slamet</td>
+              <td>Anggota · Dosen Pendidikan Biologi, Universitas Muhammadiyah Buton</td>
+              <td>Mengumpulkan data terkait kondisi alam & lingkungan yang mempengaruhi hukum adat di Kepulauan Buton.</td>
+            </tr>
+            <tr>
+              <td>Rando</td>
+              <td>Anggota · Dosen Rekayasa Sistem Komputer, Universitas Muhammadiyah Buton</td>
+              <td>Mengembangkan model peta hukum adat menggunakan Tableau; mengumpulkan & memproses data geospasial.</td>
+            </tr>
+            <tr>
+              <td>Revalina Nur Aliyah Priadi</td>
+              <td>Anggota · Mahasiswa Ilmu Hukum, Universitas Muhammadiyah Buton</td>
+              <td>Menyusun pedoman wawancara, mengidentifikasi status hukum adat, dan integrasi data hukum adat ke peta visual.</td>
+            </tr>
+            <tr>
+              <td>Laode Reza Apriliyanto</td>
+              <td>Anggota · Mahasiswa Rekayasa Sistem Komputer, Universitas Muhammadiyah Buton</td>
+              <td>Mengembangkan & memprogram sistem peta; implementasi data geospasial.</td>
+            </tr>
+            <tr>
+              <td>Rifaldi Prianto Ode</td>
+              <td>Anggota · Mahasiswa Rekayasa Sistem Komputer, Universitas Muhammadiyah Buton</td>
+              <td>Mengembangkan & memprogram sistem peta; dukungan teknis.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PETA / TABLEAU EMBED -->
+  <section id="peta">
+    <div class="container">
+      <h2>Peta Interaktif (Tableau)</h2>
+      <p class="muted">Sematkan URL <em>share</em> Tableau Anda di atribut <code>src</code> di bawah. Jika diperlukan, aktifkan <strong>Allow Public Access</strong> pada Tableau Public/Server.</p>
+      <div class="card">
+        <iframe class="tableau-embed" title="Peta Status Hukum Adat – Kepulauan Buton" src="https://public.tableau.com/views/your-workbook/your-sheet?:showVizHome=no&:embed=true" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div>© <span id="year"></span> Tim Penelitian – Model Peta Status Hukum Adat Kepulauan Buton</div>
+      <div class="muted">Didesain untuk aksesibilitas: navigasi keyboard, kontras tinggi, dan struktur semantik yang jelas.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Tahun dinamis di footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
